@@ -26,6 +26,9 @@ const Main = ({ books, shelfChange }) => {
         books={filterBooks(books, "read")}
         shelfChange={shelfChange}
       />
+      <div className='open-search'>
+        <a>Add a book</a>
+      </div>
     </div>
   );
 };
