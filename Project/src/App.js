@@ -1,7 +1,9 @@
 import "./App.css";
 import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import * as BooksAPI from "./BooksAPI";
 import Main from "./Main";
+import Search from "./Search";
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -23,9 +25,18 @@ function App() {
   };
 
   return (
-    <div className='app'>
-      <Main books={books} shelfChange={shelfChange} />
-    </div>
+    <Router>
+      <div className='app'>
+        <Switch>
+          <Route exact path='/'>
+            <Main books={books} shelfChange={shelfChange} />
+          </Route>
+          <Route exact path='/search'>
+            <Search />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
