@@ -1,16 +1,11 @@
 import BookShelf from "./BookShelf";
-import { useEffect, useState } from "react";
-import * as BooksAPI from "./BooksAPI";
 
-const Main = () => {
-  const [books, setBooks] = useState([]);
-  useEffect(() => {
-    const getBooks = async () => {
-      const response = await BooksAPI.getAll();
-      setBooks(response);
-    };
-    getBooks();
-  }, []);
+const Main = ({ books, shelfChange }) => {
+  //Filtering books before sending to bookshelf
+  const filterBooks = (books, type) => {
+    return books.filter((book) => book.shelf === type);
+  };
+
   return (
     <div className='main'>
       <div className='list-books-title'>
@@ -18,15 +13,18 @@ const Main = () => {
       </div>
       <BookShelf
         title='Currently Reading'
-        books={books.filter((book) => book.shelf === "currentlyReading")}
+        books={filterBooks(books, "currentlyReading")}
+        shelfChange={shelfChange}
       />
       <BookShelf
         title='Want To Read'
-        books={books.filter((book) => book.shelf === "wantToRead")}
+        books={filterBooks(books, "wantToRead")}
+        shelfChange={shelfChange}
       />
       <BookShelf
         title='Read'
-        books={books.filter((book) => book.shelf === "read")}
+        books={filterBooks(books, "read")}
+        shelfChange={shelfChange}
       />
     </div>
   );
