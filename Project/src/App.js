@@ -9,6 +9,7 @@ function App() {
   const [books, setBooks] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [searchError, setSearchError] = useState(false);
+  const [flip, setFlip] = useState(true);
 
   // Fetch all books from BooksAPI when loading
   const getBooks = async () => {
@@ -24,18 +25,30 @@ function App() {
   const shelfChange = async (book, shelf) => {
     await BooksAPI.update(book, shelf);
     await getBooks();
+    book.shelf = shelf;
+    setFlip(!flip);
   };
 
   // Add Search Functionality
   const searchBooks = async (query) => {
     try {
       const response = await BooksAPI.search(query);
+      const resultBooks = response.map((resultBook) => {
+        books.forEach((book) => {
+          if (resultBook.id === book.id) {
+            resultBook.shelf = book.shelf;
+          }
+        });
+        return resultBook;
+      });
       if (response && !response.error) {
         setSearchError(false);
-        setSearchResult(response);
+        setSearchResult(resultBooks);
       } else {
+        // No response
         setSearchError(true);
       }
+      // Error
     } catch (error) {
       setSearchError(true);
     }
@@ -52,6 +65,7 @@ function App() {
             <Search
               searchBooks={searchBooks}
               searchResult={searchResult}
+              setSearchResult={setSearchResult}
               shelfChange={shelfChange}
               searchError={searchError}
             />

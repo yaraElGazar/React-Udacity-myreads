@@ -1,16 +1,24 @@
 import { Link } from "react-router-dom";
 import Book from "./Book";
 
-const Search = ({ searchBooks, searchResult, shelfChange, searchError }) => {
+const Search = ({
+  searchBooks,
+  searchResult,
+  setSearchResult,
+  shelfChange,
+  searchError,
+}) => {
   const handleSearch = (event) => {
     searchBooks(event.target.value);
   };
-  console.log(searchResult);
+  const clearResult = () => {
+    setSearchResult([]);
+  };
 
   return (
     <div className='search-books'>
       <div className='search-books-bar'>
-        <Link to='/' className='close-search'>
+        <Link to='/' className='close-search' onClick={clearResult}>
           Close
         </Link>
         <div className='search-books-input-wrapper'>

@@ -5,10 +5,7 @@ const ShelfChanger = ({ book, shelfChange }) => {
 
   return (
     <div className='book-shelf-changer'>
-      <select
-        value={book.shelf ? book.shelf : "moveTo"}
-        onChange={handleChange}
-      >
+      <select value={book.shelf ? book.shelf : "none"} onChange={handleChange}>
         <option value='moveTo' disabled>
           Move to...
         </option>
