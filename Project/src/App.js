@@ -7,6 +7,8 @@ import Search from "./Search";
 
 function App() {
   const [books, setBooks] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
+  const [searchError, setSearchError] = useState(false);
 
   // Fetch all books from BooksAPI when loading
   const getBooks = async () => {
@@ -24,6 +26,21 @@ function App() {
     await getBooks();
   };
 
+  // Add Search Functionality
+  const searchBooks = async (query) => {
+    try {
+      const response = await BooksAPI.search(query);
+      if (response && !response.error) {
+        setSearchError(false);
+        setSearchResult(response);
+      } else {
+        setSearchError(true);
+      }
+    } catch (error) {
+      setSearchError(true);
+    }
+  };
+
   return (
     <Router>
       <div className='app'>
@@ -32,7 +49,12 @@ function App() {
             <Main books={books} shelfChange={shelfChange} />
           </Route>
           <Route exact path='/search'>
-            <Search />
+            <Search
+              searchBooks={searchBooks}
+              searchResult={searchResult}
+              shelfChange={shelfChange}
+              searchError={searchError}
+            />
           </Route>
         </Switch>
       </div>
