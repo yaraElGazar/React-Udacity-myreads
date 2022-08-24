@@ -18,8 +18,7 @@ The app also contains a search functionality where user can search a book and ad
 ```bash
 ├── CONTRIBUTING.md
 ├── README.md - This file.
-├── SEARCH_TERMS.md # The whitelisted short collection of available search terms for you to use with your app.
-├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
+├── package.json # npm package manager file.
 ├── public
 │   ├── favicon.ico
 │   └── index.html
